@@ -1,0 +1,54 @@
+{
+  "type": "justspace:space_type",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": {
+      "name": "minecraft:overworld",
+      "default_block": {
+        "Name": "minecraft:air"
+      },
+      "default_fluid": {
+        "Name": "minecraft:air"
+      },
+      "sea_level": 0,
+      "disable_mob_generation": false,
+      "aquifers_enabled": false,
+      "ore_veins_enabled": false,
+      "legacy_random_source": false,
+      "noise": {
+        "min_y": 0,
+        "height": 0,
+        "size_horizontal": 1,
+        "size_vertical": 1
+      },
+      "noise_router": {
+        "barrier": "minecraft:zero",
+        "fluid_level_floodedness": "minecraft:zero",
+        "fluid_level_spread": "minecraft:zero",
+        "lava": "minecraft:zero",
+        "vein_toggle": "minecraft:zero",
+        "vein_ridged": "minecraft:zero",
+        "vein_gap": "minecraft:zero",
+        "temperature": "minecraft:zero",
+        "vegetation": "minecraft:zero",
+        "continents": "minecraft:zero",
+        "erosion": "minecraft:zero",
+        "depth": "minecraft:zero",
+        "ridges": "minecraft:zero",
+        "initial_density_without_jaggedness": "minecraft:zero",
+        "final_density": "minecraft:zero"
+      },
+      "spawn_target": [],
+      "surface_rule": {
+        "type": "minecraft:block",
+        "result_state": {
+          "Name": "minecraft:stone"
+        }
+      }
+    },
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "justspace:asteroid_field_biome"
+    }
+  }
+}

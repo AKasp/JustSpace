@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "justspace:code_structure_end_phantom_balloon",
+      "weight": 100
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 760919001,
+    "frequency": 1,
+    "spacing": 3,
+    "separation": 1
+  }
+}

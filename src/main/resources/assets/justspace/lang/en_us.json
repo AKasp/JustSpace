@@ -1,0 +1,13 @@
+{
+  "itemGroup.justspace": "Example Mod Tab",
+  "block.justspace.example_block": "Example Block",
+  "item.justspace.example_item": "Example Item",
+
+  "justspace.configuration.title": "justspace Configs",
+  "justspace.configuration.section.justspace.common.toml": "justspace Configs",
+  "justspace.configuration.section.justspace.common.toml.title": "justspace Configs",
+  "justspace.configuration.items": "Item List",
+  "justspace.configuration.logDirtBlock": "Log Dirt Block",
+  "justspace.configuration.magicNumberIntroduction": "Magic Number Text",
+  "justspace.configuration.magicNumber": "Magic Number"
+}
