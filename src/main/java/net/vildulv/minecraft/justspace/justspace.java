@@ -105,11 +105,14 @@ public class justspace {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.register(Config.class);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         NeoForge.EVENT_BUS.addListener(TeleportOnTick::onEntityTick);
+        NeoForge.EVENT_BUS.register(new OnLivingBreathEventHandler());
+        NeoForge.EVENT_BUS.register(new OnDrowningEventHandler());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -123,6 +126,9 @@ public class justspace {
         LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(), Config.MAGIC_NUMBER.getAsInt());
 
         Config.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+
+
+        Config.PARSED_PLANETS.entrySet().forEach((item) -> LOGGER.info("PLANET >> {} x >> {}", item.getKey(), item.getValue().x()));
     }
 
     // Add the example block item to the building blocks tab
@@ -139,5 +145,7 @@ public class justspace {
         LOGGER.info("HELLO from server starting");
     }
 
-
+    public static ResourceLocation fromNamespaceAndPath(String s) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, s);
+    }
 }

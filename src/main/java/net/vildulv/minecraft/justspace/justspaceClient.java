@@ -7,8 +7,10 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.vildulv.minecraft.justspace.client.render.effects.SpaceDimensionEffect;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = justspace.MODID, dist = Dist.CLIENT)
@@ -27,5 +29,10 @@ public class justspaceClient {
         // Some client setup code
         justspace.LOGGER.info("HELLO FROM CLIENT SETUP");
         justspace.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+
+    @SubscribeEvent
+    public static void dimensionEffects(RegisterDimensionSpecialEffectsEvent event){
+        event.register(justspace.fromNamespaceAndPath("space_dimension_effect"), new SpaceDimensionEffect());
     }
 }

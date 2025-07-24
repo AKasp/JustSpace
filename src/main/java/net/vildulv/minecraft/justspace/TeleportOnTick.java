@@ -3,23 +3,24 @@ package net.vildulv.minecraft.justspace;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.portal.TeleportTransition;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.vildulv.minecraft.justspace.mixin.ServerGamePacketListenerImplAccessor;
 import net.vildulv.minecraft.justspace.mixin.ServerPlayerAccessor;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 
 public class TeleportOnTick {
 
+    private static final int LAND_TO_SPACE_CONVERSION_FACTOR = 256;
+    private static final int LANDING_ZONE = 256;
 
     public static final ResourceKey<Level> SPACE_DIMENSION_KEY = ResourceKey.create(
             Registries.DIMENSION,
@@ -33,118 +34,172 @@ public class TeleportOnTick {
         }
 
         int triggerAtY = entity.level().getMinY() - 30;
-        boolean shouldTeleport = (entity.getY() < triggerAtY && entity.yo < triggerAtY) ||
-                (entity.getY() > 400 && entity.yo > 400);
-
-        boolean isTeleporting = false;
-        if (entity instanceof ServerPlayer player) {
-            ServerGamePacketListenerImplAccessor accessor = (ServerGamePacketListenerImplAccessor) player.connection;
-            isTeleporting = accessor.getAwaitingPositionFromClient() != null;
+        if (entity.getY() < triggerAtY && entity.yo < triggerAtY) {
+            handleTeleportToPlanet(entity);
         }
-     /*   CompoundTag persistentData = Balm.getHooks().getPersistentData(entity);
-        if (entity.onGround()) {
-            persistentData.putLong("LastGroundedPos", entity.blockPosition().asLong());
-        } */
+        if (entity.getY() > 300 && entity.yo > 300) {
+            handleTeleportToSpace(entity);
+        }
+    }
 
-        if (shouldTeleport && !isTeleporting  && fireForgivingVoidEvent(entity)) {
-            if (entity instanceof LivingEntity livingEntity) {
-                // applyFallThroughVoidEffects(livingEntity);
+    private static void handleTeleportToPlanet(Entity entity) {
+        if (entity.level().dimension() != SPACE_DIMENSION_KEY) {
+            return;
+        }
+        if (entity instanceof ServerPlayer player) {
+            if (isTeleporting(player)) {
+                return; // Don't teleport if already teleporting
             }
+            final Entity vehicle = player.getVehicle();
+            List<Entity> entitiesToTeleport = getEntitiesToTeleport(entity);
 
-            final var entitiesToTeleport = new ArrayList<Entity>();
-            entitiesToTeleport.add(entity);
-            if (entity.isVehicle()) {
-                entitiesToTeleport.addAll(entity.getPassengers());
-                entity.ejectPassengers();
-            }
+            ResourceKey<Level> targetDimension = resolveTargetDimension(player);
 
-            final var vehicle = entity.getVehicle();
-            if (vehicle != null) {
-                entitiesToTeleport.add(vehicle);
-                entity.stopRiding();
-            }
-
+            //Needed to keep track of the new entities created if we change dimensions.
+            Map<Integer, Entity> teleportedEntities = new HashMap<>();
             entitiesToTeleport.forEach(teleportedEntity -> {
-                if (isAllowedEntity(teleportedEntity)) {
-                    if (teleportedEntity instanceof ServerPlayerAccessor player) {
-                        player.setIsChangingDimension(true);
+                if (isAllowedEntity(teleportedEntity) &&
+                        teleportedEntity.level().dimension() == SPACE_DIMENSION_KEY) {
+                    if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
+                        playerAccessor.setIsChangingDimension(true);
                     }
 
                     System.out.println("Player teleport");
-                    // final var teleportedEntityData = Balm.getHooks().getPersistentData(teleportedEntity);
-                    //  final var returnToGrounded = ForgivingVoidConfig.getActive().returnToLastGrounded;
-                    //   final var lastGroundedPos = teleportedEntityData.getLong("LastGroundedPos").map(BlockPos::of).orElseGet(teleportedEntity::blockPosition);
-                    final var x = teleportedEntity.getX(); //returnToGrounded ? lastGroundedPos.getX() + 0.5f : teleportedEntity.getX();
-                    var y = 350;
-                    final var z = teleportedEntity.getZ(); // returnToGrounded ? lastGroundedPos.getZ() + 0.5f : teleportedEntity.getZ();
-                    if (teleportedEntity.getY() < 400) {
-                        teleportedEntity.teleportTo(x, y, z);
-                    } else {
-                        y = 50;
-                        ServerLevel level  = teleportedEntity.level().getServer().getLevel(SPACE_DIMENSION_KEY);
-                        teleportedEntity.teleportTo(level, x, y, z,
-                                Set.of(),
-                                teleportedEntity.getYRot(), teleportedEntity.getXRot(),
-                                true);
+                    var x = teleportedEntity.getX();
+                    var y = 250;
+                    var z = teleportedEntity.getZ();
+                    if (targetDimension != SPACE_DIMENSION_KEY) {
+                        Vec3 targetPos = spaceCoordToLandCoord(teleportedEntity.getPosition(0.0f), targetDimension);
+                        x = targetPos.x;
+                        z = targetPos.z;
                     }
+                    ServerLevel level = teleportedEntity.level().getServer().getLevel(targetDimension);
 
-                    // teleportedEntityData.putBoolean("ForgivingVoidIsFalling", true);
+                    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(x, y, z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
+                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
+
+
+                    if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
+                        // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
+                        // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.
+                        playerAccessor.setIsChangingDimension(false);
+                    }
                 }
             });
 
             if (vehicle != null) {
-                entity.startRiding(vehicle);
+                Entity newVehicle = teleportedEntities.get(vehicle.getId());
+                player.startRiding(newVehicle);
             }
-        }  /* else if (persistentData.getBooleanOr("ForgivingVoidIsFalling", false)) {
-            // LivingFallEvent is not called when the player falls into water or is flying, so reset it manually - and give no damage at all.
-            if (hasLanded(entity) || isOrMayFly(entity)) {
-                persistentData.putBoolean("ForgivingVoidIsFalling", false);
-                if (entity instanceof ServerPlayerAccessor player) {
-                    player.setIsChangingDimension(false);
+        }
+    }
+
+    private static ResourceKey<Level> resolveTargetDimension(ServerPlayer player) {
+        double x = player.getX();
+        double z = player.getZ();
+        Map<String, Config.PlanetRecord> planets = Config.PARSED_PLANETS;
+        for (Config.PlanetRecord planet : planets.values()) {
+            if (Math.abs(planet.x() - x) < LANDING_ZONE && Math.abs(planet.z() - z) < LANDING_ZONE) {
+                return planet.dimensionKey();
+            }
+        }
+        return SPACE_DIMENSION_KEY; // Default to space if no planet found
+    }
+
+    private static void handleTeleportToSpace(Entity entity) {
+        if (entity.level().dimension() == SPACE_DIMENSION_KEY) {
+            return;
+        }
+        if (entity instanceof ServerPlayer player) {
+            if (isTeleporting(player)) {
+                return; // Don't teleport if already teleporting
+            }
+            final Entity vehicle = player.getVehicle();
+            List<Entity> entitiesToTeleport = getEntitiesToTeleport(entity);
+
+            ResourceKey<Level> currentDimension = player.level().dimension();
+            Map<Integer, Entity> teleportedEntities = new HashMap<>();
+            entitiesToTeleport.forEach(teleportedEntity -> {
+                if (isAllowedEntity(teleportedEntity) &&
+                        teleportedEntity.level().dimension() != SPACE_DIMENSION_KEY) {
+                    if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
+                        playerAccessor.setIsChangingDimension(true);
+                    }
+
+                    System.out.println("Player teleport");
+                    Vec3 targetPos = landCoordToSpaceCoord(teleportedEntity.getPosition(0.0f), currentDimension);
+
+                    ServerLevel level = teleportedEntity.level().getServer().getLevel(SPACE_DIMENSION_KEY);
+                    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(targetPos.x, targetPos.y, targetPos.z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
+                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
+                    if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
+                        // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
+                        // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.
+                        playerAccessor.setIsChangingDimension(false);
+                    }
                 }
-                return;
-            } */
+            });
 
-        if (entity instanceof ServerPlayerAccessor player) {
-            // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
-            // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.
-            player.setIsChangingDimension(true);
-            //  }
+            if (vehicle != null) {
+                Entity newVehicle = teleportedEntities.get(vehicle.getId());
+                player.startRiding(newVehicle);
+            }
         }
     }
 
-
-    private static boolean fireForgivingVoidEvent(Entity entity) {
-        //    ForgivingVoidFallThroughEvent event = new ForgivingVoidFallThroughEvent(entity);
-        //     Balm.getEvents().fireEvent(event);
-        //    return !event.isCanceled();
-        return true;
+    private static boolean isTeleporting(ServerPlayer player) {
+        ServerGamePacketListenerImplAccessor accessor = (ServerGamePacketListenerImplAccessor) player.connection;
+        return accessor.getAwaitingPositionFromClient() != null;
     }
 
-    private static boolean hasLanded(Entity entity) {
-        if (entity.onGround() || entity.isInWater() || entity.isInLava()) {
-            return true;
-        }
-        return false;
-        // final var landedOnState = entity.level().getBlockState(entity.blockPosition());
-        //  return FALL_CATCHING_BLOCKS.contains(landedOnState.getBlock());
-    }
-
-    private static boolean isOrMayFly(Entity entity) {
-        if (!(entity instanceof Player player)) {
-            return false;
+    private static List<Entity> getEntitiesToTeleport(Entity entity) {
+        final var entitiesToTeleport = new ArrayList<Entity>();
+        entitiesToTeleport.add(entity);
+        if (entity.isVehicle()) {
+            entitiesToTeleport.addAll(entity.getPassengers());
+            entity.ejectPassengers();
         }
 
-        return player.getAbilities().flying || player.getAbilities().mayfly;
+        final var vehicle = entity.getVehicle();
+        if (vehicle != null) {
+            entitiesToTeleport.add(vehicle);
+            entity.stopRiding();
+        }
+        return entitiesToTeleport;
     }
 
+    private static Vec3 spaceCoordToLandCoord(Vec3 spaceCoord, ResourceKey<Level> dimension) {
+        Config.PlanetRecord planetRecord = getPlanetRecord(dimension);
+        double x = (spaceCoord.x - planetRecord.x()) * LAND_TO_SPACE_CONVERSION_FACTOR;
+        double y = 250;
+        double z = (spaceCoord.z - planetRecord.z()) * LAND_TO_SPACE_CONVERSION_FACTOR;
+        return new Vec3(x, y, z);
+    }
+
+    private static Vec3 landCoordToSpaceCoord(Vec3 landCoord, ResourceKey<Level> dimension) {
+        Config.PlanetRecord planetRecord = getPlanetRecord(dimension);
+        double x = landCoord.x / LAND_TO_SPACE_CONVERSION_FACTOR + planetRecord.x();
+        double y = 50;
+        double z = landCoord.z / LAND_TO_SPACE_CONVERSION_FACTOR + planetRecord.z();
+        return new Vec3(x, y, z);
+    }
+
+    private static Config.PlanetRecord getPlanetRecord(ResourceKey<Level> dimension) {
+        Map<String, Config.PlanetRecord> planets = Config.PARSED_PLANETS;
+        for (Config.PlanetRecord planet : planets.values()) {
+            if (planet.dimensionKey().equals(dimension)) {
+                return planet;
+            }
+        }
+        return null; // or throw an exception if preferred
+    }
 
     private static boolean isAllowedEntity(Entity entity) {
         if (entity.level().isClientSide) {
             return false;
         }
 
-        if (entity instanceof Player) {
+        if (entity instanceof LivingEntity) {
             return true;
         }
         return false;

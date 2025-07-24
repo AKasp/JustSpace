@@ -5,7 +5,7 @@
     "settings": {
       "name": "minecraft:overworld",
       "default_block": {
-        "Name": "minecraft:air"
+        "Name": "minecraft:stone"
       },
       "default_fluid": {
         "Name": "minecraft:air"
