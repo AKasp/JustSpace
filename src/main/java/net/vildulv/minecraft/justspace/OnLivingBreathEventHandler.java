@@ -1,6 +1,8 @@
 package net.vildulv.minecraft.justspace;
 
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 
@@ -9,8 +11,14 @@ public class OnLivingBreathEventHandler {
     @SubscribeEvent
     public void onLivingBreathEvent(LivingBreatheEvent event) {
         LivingEntity entity = event.getEntity();
-        if (entity.level().dimension() == TeleportOnTick.SPACE_DIMENSION_KEY &&
+        if (entity.level().dimension() == justspace.SPACE_DIMENSION_KEY &&
                 entity.isAlive() && !entity.canBreatheUnderwater()) {
+            Vec3 pos = entity.getEyePosition();
+            if (VentTracker.isInBreathableArea(entity.level(), new Vec3i((int)pos.x, (int)pos.y, (int)pos.z))) {
+                // If the entity is in a breathable area, allow breathing
+                event.setCanBreathe(true);
+                return;
+            }
             // Decrease air supply by 5 every tick
             event.setCanBreathe(false);
             event.setConsumeAirAmount(5);

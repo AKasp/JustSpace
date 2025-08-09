@@ -160,9 +160,9 @@ public class SpaceDimensionEffect extends DimensionSpecialEffects {
         if (distance > 500) {
             return; //Don't draw further than 500 blocks away
         }
-        System.out.println("Distance to planet: " + distance);
+      //  System.out.println("Distance to planet: " + distance);
         f = planetYPlane - (float) distance * 0.2f;
-        System.out.println("size: " + f);
+       // System.out.println("size: " + f);
         Matrix4f matrix4f = poseStack.last().pose().translation(-(float) dx, -(float) dy, -(float) dz);
 
         vertexconsumer.addVertex(matrix4f, -f, 0, f).setUv(0.0F, 0.0F).setColor(i);

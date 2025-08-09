@@ -1,13 +1,10 @@
 package net.vildulv.minecraft.justspace;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
@@ -17,15 +14,13 @@ import net.vildulv.minecraft.justspace.mixin.ServerPlayerAccessor;
 
 import java.util.*;
 
+import static net.vildulv.minecraft.justspace.justspace.SPACE_DIMENSION_KEY;
+
 public class TeleportOnTick {
 
     private static final int LAND_TO_SPACE_CONVERSION_FACTOR = 256;
     private static final int LANDING_ZONE = 256;
 
-    public static final ResourceKey<Level> SPACE_DIMENSION_KEY = ResourceKey.create(
-            Registries.DIMENSION,
-            ResourceLocation.fromNamespaceAndPath(justspace.MODID, "space")
-    );
 
     public static void onEntityTick(PlayerTickEvent.Post event) {
         Entity entity = event.getEntity();

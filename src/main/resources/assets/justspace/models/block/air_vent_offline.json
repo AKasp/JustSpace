@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "justspace:block/air_vent_offline"
+  }
+}
