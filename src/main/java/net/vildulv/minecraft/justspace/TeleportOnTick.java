@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.vildulv.minecraft.justspace.mixin.ServerGamePacketListenerImplAccessor;
@@ -28,7 +27,7 @@ public class TeleportOnTick {
             return;
         }
 
-        int triggerAtY = entity.level().getMinY() - 30;
+        int triggerAtY =  -60;// entity.level().getMinY() - 30;
         if (entity.getY() < triggerAtY && entity.yo < triggerAtY) {
             handleTeleportToPlanet(entity);
         }
@@ -70,8 +69,9 @@ public class TeleportOnTick {
                     }
                     ServerLevel level = teleportedEntity.level().getServer().getLevel(targetDimension);
 
-                    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(x, y, z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
-                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
+                //    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(x, y, z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
+                //    teleportedEntities.put(teleportedEntity.getId(), newEntity);
+                    teleportedEntity.teleportTo(level, x, y, z, Set.of(), teleportedEntity.getYRot(), teleportedEntity.getXRot());
 
 
                     if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
@@ -125,8 +125,11 @@ public class TeleportOnTick {
                     Vec3 targetPos = landCoordToSpaceCoord(teleportedEntity.getPosition(0.0f), currentDimension);
 
                     ServerLevel level = teleportedEntity.level().getServer().getLevel(SPACE_DIMENSION_KEY);
-                    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(targetPos.x, targetPos.y, targetPos.z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
-                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
+                    //TODO fix store new entity ID.
+                  //  Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(targetPos.x, targetPos.y, targetPos.z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
+                   // teleportedEntities.put(teleportedEntity.getId(), newEntity);
+                    teleportedEntity.teleportTo(level, targetPos.x, targetPos.y, targetPos.z, Set.of(), teleportedEntity.getYRot(), teleportedEntity.getXRot());
+
                     if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
                         // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
                         // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.

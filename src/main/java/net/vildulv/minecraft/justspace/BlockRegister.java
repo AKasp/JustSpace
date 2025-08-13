@@ -1,6 +1,7 @@
 package net.vildulv.minecraft.justspace;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -22,11 +23,12 @@ public class BlockRegister {
 
     public static final DeferredBlock<Block> AIR_VENT = BLOCKS.registerBlock("air_vent", AirVentBlock::new, BlockBehaviour.Properties.of()
             .mapColor(MapColor.STONE)
-            .randomTicks());
+            .destroyTime(1F));
+
 
 
     public static final Supplier<BlockEntityType<OxygenGenerator>> OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("oxygen_generator",
-            () -> (new BlockEntityType<>(OxygenGenerator::new, Set.of(AIR_VENT.get()))));
+            () -> BlockEntityType.Builder.of(OxygenGenerator::new, AIR_VENT.get()).build(null));
 
 
 }

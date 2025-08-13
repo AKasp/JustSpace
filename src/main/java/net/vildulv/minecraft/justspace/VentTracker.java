@@ -96,7 +96,7 @@ public class VentTracker {
                 return true; // If the position is in any of the historical areas, return true.
             }
         }
-        System.out.println("No air " + levelMap);
+      //  System.out.println("No air " + levelMap);
         return false; // If no historical area contains the position, return false.
     }
 }

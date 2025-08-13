@@ -19,7 +19,7 @@
   },
   "spawners": {},
   "spawn_costs": {},
-  "carvers": [],
+  "carvers": {},
   "features": [
     [
       "justspace:asteroids/big_asteroid",
