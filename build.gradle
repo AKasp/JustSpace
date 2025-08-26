@@ -19,6 +19,13 @@ group = mod_group_id
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
+    mavenCentral()
+    maven {
+        name = "Valkyrien Skies Internal"
+        url = "https://maven.valkyrienskies.org"
+    }
+
+
 }
 
 base {
@@ -133,6 +140,19 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+
+   // additionalRuntimeClasspath "org.joml:joml-primitives:1.10.0"
+
+    implementation("org.valkyrienskies.core:api:1.1.0+2a62e6a823")
+    implementation("org.valkyrienskies.core:api-game:1.1.0+2a62e6a823")
+    implementation("org.valkyrienskies.core:util:1.1.0+2a62e6a823")
+    implementation("org.valkyrienskies.core:impl:1.1.0+2a62e6a823")
+    compileOnly("org.valkyrienskies:valkyrienskies-1-21-1-forge:2.3.0-beta.8+35e8864bfe")
+  //  runtimeOnly ("org.valkyrienskies:valkyrienskies-1-21-1-forge:2.3.0-beta.8+35e8864bfe")
+   // runtimeOnly ("org.valkyrienskies.eureka:eureka-1-21-1-forge:1.5.1-beta.4+221ac4527e")
+
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

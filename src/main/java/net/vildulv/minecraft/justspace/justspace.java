@@ -88,6 +88,10 @@ public class justspace {
         NeoForge.EVENT_BUS.register(new OnDrowningEventHandler());
         NeoForge.EVENT_BUS.register(new OnFalldamageEventHandler());
 
+        NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.RegisterCommandsEvent event) -> {
+            net.vildulv.minecraft.justspace.command.TeleportMeAndShipCommand.register(event.getDispatcher());
+        });
+
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

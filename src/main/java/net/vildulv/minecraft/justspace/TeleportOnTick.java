@@ -3,11 +3,13 @@ package net.vildulv.minecraft.justspace;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.vildulv.minecraft.justspace.block.compat.VsCompatibility;
 import net.vildulv.minecraft.justspace.mixin.ServerGamePacketListenerImplAccessor;
 import net.vildulv.minecraft.justspace.mixin.ServerPlayerAccessor;
 
@@ -27,7 +29,7 @@ public class TeleportOnTick {
             return;
         }
 
-        int triggerAtY =  -60;// entity.level().getMinY() - 30;
+        int triggerAtY = -0;// entity.level().getMinY() - 30;
         if (entity.getY() < triggerAtY && entity.yo < triggerAtY) {
             handleTeleportToPlanet(entity);
         }
@@ -69,10 +71,9 @@ public class TeleportOnTick {
                     }
                     ServerLevel level = teleportedEntity.level().getServer().getLevel(targetDimension);
 
-                //    Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(x, y, z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
-                //    teleportedEntities.put(teleportedEntity.getId(), newEntity);
-                    teleportedEntity.teleportTo(level, x, y, z, Set.of(), teleportedEntity.getYRot(), teleportedEntity.getXRot());
 
+                    Entity newEntity = teleportTo(level, teleportedEntity, x, y, z, teleportedEntity.getYRot(), teleportedEntity.getXRot());
+                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
 
                     if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
                         // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
@@ -125,16 +126,16 @@ public class TeleportOnTick {
                     Vec3 targetPos = landCoordToSpaceCoord(teleportedEntity.getPosition(0.0f), currentDimension);
 
                     ServerLevel level = teleportedEntity.level().getServer().getLevel(SPACE_DIMENSION_KEY);
-                    //TODO fix store new entity ID.
-                  //  Entity newEntity = teleportedEntity.teleport(new TeleportTransition(level, new Vec3(targetPos.x, targetPos.y, targetPos.z), Vec3.ZERO, teleportedEntity.getYRot(), teleportedEntity.getXRot(), Set.of(), TeleportTransition.DO_NOTHING));
-                   // teleportedEntities.put(teleportedEntity.getId(), newEntity);
-                    teleportedEntity.teleportTo(level, targetPos.x, targetPos.y, targetPos.z, Set.of(), teleportedEntity.getYRot(), teleportedEntity.getXRot());
+
+                    Entity newEntity = teleportTo(level, teleportedEntity, targetPos.x, targetPos.y, targetPos.z, teleportedEntity.getYRot(), teleportedEntity.getXRot());
+                    teleportedEntities.put(teleportedEntity.getId(), newEntity);
 
                     if (teleportedEntity instanceof ServerPlayerAccessor playerAccessor) {
                         // Vanilla's AntiCheat is triggers on falling and teleports, even in Vanilla.
                         // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.
                         playerAccessor.setIsChangingDimension(false);
                     }
+
                 }
             });
 
@@ -197,9 +198,58 @@ public class TeleportOnTick {
             return false;
         }
 
-        if (entity instanceof LivingEntity) {
-            return true;
+        return true;
+    }
+
+
+    private static Entity teleportTo(ServerLevel level, Entity entity, double x, double y, double z, float yRot, float xRot) {
+      /*
+        } */
+        boolean success = false;
+        if (ModList.get().isLoaded("valkyrienskies")) {
+            success = VsCompatibility.teleportToValkyrienSkies((ServerLevel) entity.level(), level, entity, x, y, z, yRot, xRot);
         }
-        return false;
+        if (!success) {
+            if (entity instanceof ServerPlayer) {
+                entity.teleportTo(level, x, y, z, Set.of(), entity.getYRot(), entity.getXRot());
+                return entity;
+            } else {
+                //Copy of entity.teleportTo needed to get new entity object
+                float f = Mth.clamp(xRot, -90.0F, 90.0F);
+                if (level == entity.level()) {
+                    entity.moveTo(x, y, z, yRot, f);
+                    teleportPassengers(entity);
+                    entity.setYHeadRot(yRot);
+                    return entity;
+                } else {
+                    entity.unRide();
+                    Entity newEntity = entity.getType().create(level);
+                    if (newEntity == null) {
+                        return null;
+                    }
+
+                    newEntity.restoreFrom(entity);
+                    newEntity.moveTo(x, y, z, yRot, f);
+                    newEntity.setYHeadRot(yRot);
+                    newEntity.setRemoved(Entity.RemovalReason.CHANGED_DIMENSION);
+                    level.addDuringTeleport(newEntity);
+                    return newEntity;
+                }
+            }
+
+        }
+        return entity;
+    }
+
+    private static void teleportPassengers(Entity entity) {
+        entity.getSelfAndPassengers().forEach((ride) -> {
+            Iterator var1 = ride.getPassengers().iterator();
+
+            while (var1.hasNext()) {
+                Entity e = (Entity) var1.next();
+                ride.positionRider(e);
+            }
+
+        });
     }
 }
