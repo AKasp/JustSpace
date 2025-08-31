@@ -24,6 +24,7 @@ repositories {
         name = "Valkyrien Skies Internal"
         url = "https://maven.valkyrienskies.org"
     }
+    maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
 
 
 }
@@ -149,6 +150,8 @@ dependencies {
     implementation("org.valkyrienskies.core:util:1.1.0+2a62e6a823")
     implementation("org.valkyrienskies.core:impl:1.1.0+2a62e6a823")
     compileOnly("org.valkyrienskies:valkyrienskies-1-21-1-forge:2.3.0-beta.8+35e8864bfe")
+
+  //  implementation("com.simibubi.create:create-1.21.1:6.0.6-107:slim") { transitive = false }
   //  runtimeOnly ("org.valkyrienskies:valkyrienskies-1-21-1-forge:2.3.0-beta.8+35e8864bfe")
    // runtimeOnly ("org.valkyrienskies.eureka:eureka-1-21-1-forge:1.5.1-beta.4+221ac4527e")
 

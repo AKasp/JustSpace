@@ -6,7 +6,8 @@
   "mixins": [
     "ServerGamePacketListenerImplAccessor",
     "ServerPlayerAccessor",
-    "GravityOverrides"
+    "GravityOverrides",
+    "InWaterOverride"
   ],
   "client": [
   ],

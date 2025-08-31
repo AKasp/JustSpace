@@ -1,16 +1,21 @@
 package net.vildulv.minecraft.justspace;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,9 +26,11 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -47,6 +54,25 @@ public class justspace {
             ResourceLocation.fromNamespaceAndPath(justspace.MODID, "space")
     );
 
+    public static DeferredRegister FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, MODID);
+    public static final Holder<FluidType> ETHER_FLUID = FLUID_TYPES.register("ether", () -> new FluidType(FluidType.Properties.create().descriptionId("block.minecraft.air").motionScale((double)1.0F).canPushEntity(false).canSwim(false).canDrown(false).fallDistanceModifier(1.0F).pathType((PathType)null).adjacentPathType((PathType)null).density(0).temperature(0).viscosity(0)) {
+        public void setItemMovement(ItemEntity entity) {
+            if (!entity.isNoGravity()) {
+                entity.setDeltaMovement(entity.getDeltaMovement().add((double)0.0F, -0.04, (double)0.0F));
+            }
+
+        }
+
+        public boolean canDrownIn(LivingEntity entity) {
+            return true;
+        }
+
+        @Override
+        public boolean canSwim(Entity entity) {
+            return false;
+        }
+    });
+
 
     // Creates a creative tab with the id "justspace:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("justspace_tab", () -> CreativeModeTab.builder()
@@ -68,6 +94,7 @@ public class justspace {
         BlockRegister.BLOCK_ENTITY_REGISTER.register(modEventBus);
         // Register the Deferred Register to the mod event bus so items get registered
         ITEMS.register(modEventBus);
+        FLUID_TYPES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so tabs get registered
         CREATIVE_MODE_TABS.register(modEventBus);
 
