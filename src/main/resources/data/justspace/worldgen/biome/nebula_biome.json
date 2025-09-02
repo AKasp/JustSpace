@@ -1,0 +1,24 @@
+{
+  "temperature": -100,
+  "downfall": 0,
+  "has_precipitation": false,
+  "temperature_modifier": "frozen",
+  "creature_spawn_probability": 0,
+  "effects": {
+    "sky_color": 13182597,
+    "fog_color": 14053799,
+    "water_color": 0,
+    "water_fog_color": 0,
+    "grass_color_modifier": "none",
+    "particle": {
+      "options": {
+        "type": "minecraft:dragon_breath"
+      },
+      "probability": 0.5
+    }
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {},
+  "features": []
+}

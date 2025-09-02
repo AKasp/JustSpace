@@ -32,6 +32,12 @@
           },
           {
             "data": {
+              "Name": "minecraft:iron_ore"
+            },
+            "weight": 4000
+          },
+          {
+            "data": {
               "Name": "minecraft:stone"
             },
             "weight": 16000
@@ -136,7 +142,7 @@
     "crack": {
       "base_crack_size": 3,
       "crack_point_offset": 2,
-      "generate_crack_chance": 0
+      "generate_crack_chance": 0.1
     },
     "distribution_points": {
       "type": "minecraft:uniform",

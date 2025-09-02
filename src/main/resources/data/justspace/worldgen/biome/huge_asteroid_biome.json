@@ -1,36 +1,42 @@
 {
-  "temperature": -100,
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
   "downfall": 0,
-  "has_precipitation": false,
-  "temperature_modifier": "frozen",
-  "creature_spawn_probability": 0,
   "effects": {
-    "sky_color": 10658705,
-    "fog_color": 0,
-    "water_color": 0,
-    "water_fog_color": 0,
-    "grass_color_modifier": "none",
+    "sky_color": 2147696,
+    "fog_color": 3107393,
+    "foliage_color": 0,
+    "grass_color": 0,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2,
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
-    }
+    },
+    "water_color": 4159204,
+    "water_fog_color": 329011
   },
-  "spawners": {},
-  "spawn_costs": {},
-  "carvers": {},
   "features": [
     [
-      "justspace:asteroids/big_asteroid",
-      "justspace:asteroids/asteroid",
-      "justspace:asteroids/asteroid_iron_core"
+      "justspace:asteroids/huge_asteroid",
+      "justspace:asteroids/asteroid_extension",
+      "justspace:asteroids/asteroid_topping",
+      "justspace:asteroids/alien_pillar"
     ],
-    [],
+    [
+    ],
     [
       "minecraft:amethyst_geode"
     ],
-    [],
+    [
+      "minecraft:monster_room",
+      "minecraft:monster_room_deep"
+    ],
     [],
     [],
     [
@@ -59,15 +65,28 @@
       "minecraft:ore_lapis",
       "minecraft:ore_lapis_buried",
       "minecraft:ore_copper",
-      "minecraft:underwater_magma",
       "minecraft:disk_sand",
-      "minecraft:disk_clay",
-      "minecraft:disk_gravel",
-      "justspace:ore_iron_asteroid"
+      "minecraft:disk_gravel"
     ],
     [],
-    [],
-    [],
-    []
-  ]
+    [
+    ],
+    [
+      "minecraft:glow_lichen"
+    ],
+    [
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_creature": []
+  },
+  "temperature": 0.5
 }

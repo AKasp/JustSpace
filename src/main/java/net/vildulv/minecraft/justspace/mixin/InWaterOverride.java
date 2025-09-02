@@ -1,6 +1,8 @@
 package net.vildulv.minecraft.justspace.mixin;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.fluids.FluidType;
 import net.vildulv.minecraft.justspace.justspace;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +28,9 @@ public class InWaterOverride {
     protected void getEyeInFluidType(CallbackInfoReturnable<FluidType> cir) {
         Entity entity = (Entity) (Object) this;
         if (entity.level().dimension() == justspace.SPACE_DIMENSION_KEY) {
-            cir.setReturnValue(justspace.ETHER_FLUID.value());
+            if (entity instanceof Player) {
+                cir.setReturnValue(justspace.ETHER_FLUID.value());
+            }
         }
     }
 }

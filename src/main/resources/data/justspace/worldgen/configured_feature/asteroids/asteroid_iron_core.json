@@ -20,21 +20,21 @@
           },
           {
             "data": {
-              "Name": "minecraft:lapis_ore"
+              "Name": "minecraft:gold_ore"
             },
-            "weight": 2
+            "weight": 20
           },
           {
             "data": {
-              "Name": "minecraft:coal_ore"
+              "Name": "minecraft:copper_ore"
             },
             "weight": 40
           },
           {
             "data": {
-              "Name": "minecraft:stone"
+              "Name": "minecraft:iron_ore"
             },
-            "weight": 16000
+            "weight": 4000
           }
         ]
       },
@@ -43,27 +43,27 @@
         "entries": [
           {
             "data": {
-              "Name": "minecraft:diamond_ore"
+              "Name": "minecraft:gold_ore"
             },
-            "weight": 1
+            "weight": 10
           },
           {
             "data": {
-              "Name": "minecraft:lapis_ore"
+              "Name": "minecraft:copper_ore"
             },
-            "weight": 2
+            "weight": 20
           },
           {
             "data": {
-              "Name": "minecraft:coal_ore"
+              "Name": "minecraft:iron_ore"
             },
-            "weight": 40
+            "weight": 100
           },
           {
             "data": {
               "Name": "minecraft:stone"
             },
-            "weight": 16000
+            "weight": 200
           }
         ]
       },
@@ -79,19 +79,7 @@
         "entries": [
           {
             "data": {
-              "Name": "minecraft:diamond_ore"
-            },
-            "weight": 1
-          },
-          {
-            "data": {
-              "Name": "minecraft:lapis_ore"
-            },
-            "weight": 2
-          },
-          {
-            "data": {
-              "Name": "minecraft:coal_ore"
+              "Name": "minecraft:iron_ore"
             },
             "weight": 40
           },
@@ -108,27 +96,9 @@
         "entries": [
           {
             "data": {
-              "Name": "minecraft:diamond_ore"
-            },
-            "weight": 1
-          },
-          {
-            "data": {
-              "Name": "minecraft:lapis_ore"
-            },
-            "weight": 2
-          },
-          {
-            "data": {
-              "Name": "minecraft:coal_ore"
-            },
-            "weight": 40
-          },
-          {
-            "data": {
               "Name": "minecraft:stone"
             },
-            "weight": 16000
+            "weight": 1
           }
         ]
       }
@@ -136,7 +106,7 @@
     "crack": {
       "base_crack_size": 3,
       "crack_point_offset": 2,
-      "generate_crack_chance": 0
+      "generate_crack_chance": 0.1
     },
     "distribution_points": {
       "type": "minecraft:uniform",

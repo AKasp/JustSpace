@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "justspace:small_ship_structure",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 2,
+    "spread_type": "triangular",
+    "salt": 123341212
+  }
+}

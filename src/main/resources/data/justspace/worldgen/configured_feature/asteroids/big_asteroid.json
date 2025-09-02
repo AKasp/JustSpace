@@ -16,31 +16,31 @@
             "data": {
               "Name": "minecraft:diamond_ore"
             },
-            "weight": 1
+            "weight": 50
           },
           {
             "data": {
               "Name": "minecraft:lapis_ore"
             },
-            "weight": 2
-          },
-          {
-            "data": {
-              "Name": "minecraft:coal_ore"
-            },
-            "weight": 40
+            "weight": 50
           },
           {
             "data": {
               "Name": "minecraft:iron_ore"
             },
-            "weight": 4000
+            "weight": 2000
+          },
+          {
+            "data": {
+              "Name": "minecraft:gold_ore"
+            },
+            "weight": 10000
           },
           {
             "data": {
               "Name": "minecraft:stone"
             },
-            "weight": 16000
+            "weight": 10000
           }
         ]
       },
@@ -132,7 +132,7 @@
           },
           {
             "data": {
-              "Name": "minecraft:stone"
+              "Name": "minecraft:cobblestone"
             },
             "weight": 16000
           }
@@ -140,23 +140,30 @@
       }
     },
     "crack": {
-      "base_crack_size": 3,
+      "base_crack_size": 5,
       "crack_point_offset": 2,
-      "generate_crack_chance": 0.1
+      "generate_crack_chance": 0.5
     },
     "distribution_points": {
       "type": "minecraft:uniform",
       "value": {
-        "min_inclusive": 3,
-        "max_inclusive": 3
+        "min_inclusive": 5,
+        "max_inclusive": 15
+      }
+    },
+    "outer_wall_distance" : {
+      "type": "minecraft:uniform",
+      "value": {
+        "min_inclusive": 9,
+        "max_inclusive": 12
       }
     },
     "invalid_blocks_threshold": 255,
     "layers": {
       "filling": 3,
-      "inner_layer": 5,
-      "middle_layer": 7,
-      "outer_layer": 9
+      "inner_layer": 6,
+      "middle_layer": 9,
+      "outer_layer": 12
     },
     "max_gen_offset": 15,
     "min_gen_offset": -15,

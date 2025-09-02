@@ -1,9 +1,9 @@
 {
-  "feature": "justspace:asteroids/huge_asteroid",
+  "feature": "justspace:asteroids/asteroid",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 12
+      "type": "minecraft:rarity_filter",
+      "chance": 10
     },
     {
       "type": "minecraft:count",
@@ -13,17 +13,21 @@
       "type": "minecraft:random_offset",
       "xz_spread": {
         "type": "minecraft:uniform",
-        "min_inclusive":  0,
+        "min_inclusive": 0,
         "max_inclusive": 16
       },
-      "y_spread": 0
+      "y_spread": {
+        "type": "minecraft:uniform",
+        "min_inclusive": 0,
+        "max_inclusive": 16
+      }
     },
     {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:uniform",
         "min_inclusive": {
-          "absolute": 198
+          "absolute": 30
         },
         "max_inclusive": {
           "absolute": 200
