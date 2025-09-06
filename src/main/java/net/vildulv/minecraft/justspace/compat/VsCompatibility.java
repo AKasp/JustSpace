@@ -1,4 +1,4 @@
-package net.vildulv.minecraft.justspace.block.compat;
+package net.vildulv.minecraft.justspace.compat;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;

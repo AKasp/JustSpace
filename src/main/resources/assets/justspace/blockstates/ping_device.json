@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "justspace:block/ping_device"
+    },
+    "facing=south": {
+      "model": "justspace:block/ping_device",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "justspace:block/ping_device",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "justspace:block/ping_device",
+      "y": 270
+    }
+  }
+}

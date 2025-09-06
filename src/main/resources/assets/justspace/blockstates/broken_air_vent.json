@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "justspace:block/broken_air_vent"
+    },
+    "facing=south": {
+      "model": "justspace:block/broken_air_vent",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "justspace:block/broken_air_vent",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "justspace:block/broken_air_vent",
+      "y": 270
+    }
+  }
+}

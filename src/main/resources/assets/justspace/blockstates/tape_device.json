@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "justspace:block/tape_device"
+    },
+    "facing=south": {
+      "model": "justspace:block/tape_device",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "justspace:block/tape_device",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "justspace:block/tape_device",
+      "y": 270
+    }
+  }
+}

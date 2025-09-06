@@ -2,13 +2,15 @@ package net.vildulv.minecraft.justspace;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.vildulv.minecraft.justspace.block.AirVentBlock;
+import net.vildulv.minecraft.justspace.block.*;
 import net.vildulv.minecraft.justspace.block.entity.OxygenGenerator;
 
 import java.util.Set;
@@ -25,10 +27,34 @@ public class BlockRegister {
             .mapColor(MapColor.STONE)
             .destroyTime(1F));
 
+    public static final DeferredBlock<Block> BROKEN_AIR_VENT = BLOCKS.registerBlock("broken_air_vent", BrokenVentBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F)
+    );
+    public static final DeferredBlock<Block> CONTROL_DEVICE = BLOCKS.registerBlock("control_device", ControlDeviceBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F)
+    );
+    public static final DeferredBlock<Block> TAPE_DEVICE = BLOCKS.registerBlock("tape_device", TapeDeviceBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F)
+    );
+    public static final DeferredBlock<Block> GAUGE_DEVICE = BLOCKS.registerBlock("gauge_device", GaugeDeviceBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F)
+    );
+    public static final DeferredBlock<Block> PING_DEVICE = BLOCKS.registerBlock("ping_device", PingDeviceBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F)
+    );
+
 
 
     public static final Supplier<BlockEntityType<OxygenGenerator>> OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("oxygen_generator",
             () -> BlockEntityType.Builder.of(OxygenGenerator::new, AIR_VENT.get()).build(null));
+
+
+
 
 
 }

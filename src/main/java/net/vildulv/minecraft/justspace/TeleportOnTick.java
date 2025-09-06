@@ -9,7 +9,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.vildulv.minecraft.justspace.block.compat.VsCompatibility;
+import net.vildulv.minecraft.justspace.compat.VsCompatibility;
 import net.vildulv.minecraft.justspace.mixin.ServerGamePacketListenerImplAccessor;
 import net.vildulv.minecraft.justspace.mixin.ServerPlayerAccessor;
 

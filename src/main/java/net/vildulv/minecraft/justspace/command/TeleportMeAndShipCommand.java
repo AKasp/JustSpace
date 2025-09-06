@@ -7,7 +7,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.vildulv.minecraft.justspace.block.compat.VsCompatibility;
+import net.vildulv.minecraft.justspace.compat.VsCompatibility;
 
 public class TeleportMeAndShipCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
