@@ -1,19 +1,18 @@
 package net.vildulv.minecraft.justspace;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.vildulv.minecraft.justspace.block.*;
-import net.vildulv.minecraft.justspace.block.entity.OxygenGenerator;
+import net.vildulv.minecraft.justspace.block.entity.CreativeOxygenGenerator;
+import net.vildulv.minecraft.justspace.block.entity.PoweredOxygenGenerator;
 
-import java.util.Set;
 import java.util.function.Supplier;
 
 public class BlockRegister {
@@ -23,7 +22,11 @@ public class BlockRegister {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, justspace.MODID);
 
-    public static final DeferredBlock<Block> AIR_VENT = BLOCKS.registerBlock("air_vent", AirVentBlock::new, BlockBehaviour.Properties.of()
+    public static final DeferredBlock<Block> CREATIVE_AIR_VENT = BLOCKS.registerBlock("creative_air_vent", CreativeAirVentBlock::new, BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .destroyTime(1F));
+
+    public static final DeferredBlock<Block> POWERED_AIR_VENT = BLOCKS.registerBlock("powered_air_vent", PoweredAirVentBlock::new, BlockBehaviour.Properties.of()
             .mapColor(MapColor.STONE)
             .destroyTime(1F));
 
@@ -49,12 +52,21 @@ public class BlockRegister {
     );
 
 
+    //Block Entities
 
-    public static final Supplier<BlockEntityType<OxygenGenerator>> OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("oxygen_generator",
-            () -> BlockEntityType.Builder.of(OxygenGenerator::new, AIR_VENT.get()).build(null));
+    public static final Supplier<BlockEntityType<CreativeOxygenGenerator>> CREATIVE_OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("creative_oxygen_generator",
+            () -> BlockEntityType.Builder.of(CreativeOxygenGenerator::new, CREATIVE_AIR_VENT.get()).build(null));
+
+    public static final Supplier<BlockEntityType<PoweredOxygenGenerator>> POWERED_OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("powered_oxygen_generator",
+            () -> BlockEntityType.Builder.of(PoweredOxygenGenerator::new, POWERED_AIR_VENT.get()).build(null));
 
 
+    //Capabilities
 
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK,
+                POWERED_OXYGEN_GENERATOR_BE.get(), PoweredOxygenGenerator::getEnergyStorageCapability);
+    }
 
 
 }

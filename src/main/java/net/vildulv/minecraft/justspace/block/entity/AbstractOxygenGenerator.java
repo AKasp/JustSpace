@@ -5,29 +5,47 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.vildulv.minecraft.justspace.BlockRegister;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.vildulv.minecraft.justspace.VentTracker;
-import net.vildulv.minecraft.justspace.block.AirVentBlock;
+import net.vildulv.minecraft.justspace.block.CreativeAirVentBlock;
 import net.vildulv.minecraft.justspace.justspace;
 
 import java.util.*;
 
 
-public class OxygenGenerator extends BlockEntity {
+public abstract class AbstractOxygenGenerator extends BlockEntity {
+    public static final DirectionProperty FACING;
 
     private final static int MAX_AREA_SIZE = 1000; // Maximum area size to prevent infinite loops
     private Set<Vec3i> area = new HashSet<>();
     private final Stack<BlockPos> queue = new Stack<>();
     private boolean prevCheckStatus = false;
-    private final Set<OxygenGenerator> currentNeighbors = new HashSet<>();
+    private final Set<AbstractOxygenGenerator> currentNeighbors = new HashSet<>();
     private int currentMaxSize = MAX_AREA_SIZE;
 
 
-    public OxygenGenerator(BlockPos pos, BlockState blockState) {
-        super(BlockRegister.OXYGEN_GENERATOR_BE.get(), pos, blockState);
+    public AbstractOxygenGenerator(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
+        super(type, pos, blockState);
         resetForNextCalculation();
+    }
+
+
+    protected BlockState rotate(BlockState state, Rotation rot) {
+        return (BlockState)state.setValue(FACING, rot.rotate((Direction)state.getValue(FACING)));
+    }
+
+    protected BlockState mirror(BlockState state, Mirror mirror) {
+        return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
+    }
+
+    static {
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
     }
 
     public Set<Vec3i> getArea() {
@@ -62,7 +80,9 @@ public class OxygenGenerator extends BlockEntity {
                 resetForNextCalculation();
                 return prevCheckStatus;
             } else {
-                queue.add(this.getBlockPos());
+                // If both queue and area is empty, we are starting a new check. Add pos in fron of this block as first position to check.
+                BlockPos startPos = this.getBlockPos().relative(this.getBlockState().getValue(FACING));
+                queue.add(startPos);
                 return prevCheckStatus;
             }
         } else {
@@ -82,14 +102,14 @@ public class OxygenGenerator extends BlockEntity {
         }
     }
 
-    private void resetForNextCalculation() {
+    protected void resetForNextCalculation() {
         area.clear();
         queue.clear();
         currentNeighbors.clear();
         currentMaxSize = MAX_AREA_SIZE;
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, OxygenGenerator blockEntity) {
+    public static void tick(Level level, BlockPos pos, BlockState state, AbstractOxygenGenerator blockEntity) {
         if(level.isClientSide) return;
         if(level.dimension() != justspace.SPACE_DIMENSION_KEY) return; // Only run on the JustSpace dimension
         long ms = System.currentTimeMillis();
@@ -97,11 +117,11 @@ public class OxygenGenerator extends BlockEntity {
         for(int n = 0; n < 10; n++) {
             sealed = blockEntity.checkSealed();
         }
-       if(state.hasProperty(AirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY)) {
+       if(state.hasProperty(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY)) {
            if (sealed) {
-                level.setBlock(pos, state.setValue(AirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, AirVentBlock.AirVentStates.SEALED), 2);
+                level.setBlock(pos, state.setValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, CreativeAirVentBlock.AirVentStates.SEALED), 2);
               } else {
-                level.setBlock(pos, state.setValue(AirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, AirVentBlock.AirVentStates.WORKING), 2);
+                level.setBlock(pos, state.setValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, CreativeAirVentBlock.AirVentStates.WORKING), 2);
            }
        }
    //    System.out.println("OxygenGenerator tick took " + (System.currentTimeMillis() - ms) + "ms, sealed: " + sealed +
@@ -133,7 +153,7 @@ public class OxygenGenerator extends BlockEntity {
         }
     }
 
-    public void addNeighbor(Set<OxygenGenerator> generators) {
+    public void addNeighbor(Set<AbstractOxygenGenerator> generators) {
       //  System.out.println("Adding neighbors to " + this + ": " + generators);
         currentNeighbors.addAll(generators);
       //  System.out.println("Current neighbors after adding: " + currentNeighbors);
@@ -148,7 +168,7 @@ public class OxygenGenerator extends BlockEntity {
         currentMaxSize += additionalSize;
     }
 
-    public Set<OxygenGenerator> getNeighbours() {
+    public Set<AbstractOxygenGenerator> getNeighbours() {
         return currentNeighbors;
     }
 

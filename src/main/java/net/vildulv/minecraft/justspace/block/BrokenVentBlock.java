@@ -27,6 +27,6 @@ public class BrokenVentBlock extends HorizontalDirectionalBlock {
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(new Property[]{FACING});
+        builder.add(FACING);
     }
 }

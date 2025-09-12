@@ -4,16 +4,12 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -24,13 +20,9 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.fluids.FluidType;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.slf4j.Logger;
@@ -46,17 +38,16 @@ public class justspace {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
-
     public static final ResourceKey<Level> SPACE_DIMENSION_KEY = ResourceKey.create(
             Registries.DIMENSION,
             ResourceLocation.fromNamespaceAndPath(justspace.MODID, "space")
     );
 
     public static DeferredRegister FLUID_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, MODID);
-    public static final Holder<FluidType> ETHER_FLUID = FLUID_TYPES.register("ether", () -> new FluidType(FluidType.Properties.create().descriptionId("block.minecraft.air").motionScale((double)1.0F).canPushEntity(false).canSwim(false).canDrown(false).fallDistanceModifier(1.0F).pathType((PathType)null).adjacentPathType((PathType)null).density(0).temperature(0).viscosity(0)) {
+    public static final Holder<FluidType> ETHER_FLUID = FLUID_TYPES.register("ether", () -> new FluidType(FluidType.Properties.create().descriptionId("block.minecraft.air").motionScale((double) 1.0F).canPushEntity(false).canSwim(false).canDrown(false).fallDistanceModifier(1.0F).pathType((PathType) null).adjacentPathType((PathType) null).density(0).temperature(0).viscosity(0)) {
         public void setItemMovement(ItemEntity entity) {
             if (!entity.isNoGravity()) {
-                entity.setDeltaMovement(entity.getDeltaMovement().add((double)0.0F, -0.04, (double)0.0F));
+                entity.setDeltaMovement(entity.getDeltaMovement().add((double) 0.0F, -0.04, (double) 0.0F));
             }
 
         }
@@ -70,7 +61,6 @@ public class justspace {
             return false;
         }
     });
-
 
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -106,6 +96,9 @@ public class justspace {
         NeoForge.EVENT_BUS.register(new OnLivingBreathEventHandler());
         NeoForge.EVENT_BUS.register(new OnDrowningEventHandler());
         NeoForge.EVENT_BUS.register(new OnFalldamageEventHandler());
+
+        //register capabilities
+        modEventBus.addListener(BlockRegister::registerCapabilities);
 
         NeoForge.EVENT_BUS.addListener((net.neoforged.neoforge.event.RegisterCommandsEvent event) -> {
             net.vildulv.minecraft.justspace.command.TeleportMeAndShipCommand.register(event.getDispatcher());

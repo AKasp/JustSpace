@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "air_vent_state=working": { "model": "justspace:block/air_vent_working" },
-    "air_vent_state=sealed": { "model": "justspace:block/air_vent_sealed" },
-    "air_vent_state=offline": { "model": "justspace:block/air_vent_offline" }
-  }
-}
