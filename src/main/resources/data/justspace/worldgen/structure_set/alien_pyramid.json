@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "justspace:alien_pyramid",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 48,
+    "separation": 8,
+    "spread_type": "triangular",
+    "salt": 8442349569
+  }
+}
