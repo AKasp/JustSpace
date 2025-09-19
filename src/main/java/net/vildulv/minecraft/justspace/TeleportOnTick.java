@@ -1,11 +1,16 @@
 package net.vildulv.minecraft.justspace;
 
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.portal.DimensionTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -15,6 +20,7 @@ import net.vildulv.minecraft.justspace.mixin.ServerPlayerAccessor;
 
 import java.util.*;
 
+import static net.minecraft.world.damagesource.DamageTypes.GENERIC;
 import static net.vildulv.minecraft.justspace.justspace.SPACE_DIMENSION_KEY;
 
 public class TeleportOnTick {
@@ -46,6 +52,7 @@ public class TeleportOnTick {
             if (isTeleporting(player)) {
                 return; // Don't teleport if already teleporting
             }
+            ServerLevel originalLevel = player.serverLevel();
             final Entity vehicle = player.getVehicle();
             List<Entity> entitiesToTeleport = getEntitiesToTeleport(entity);
 
@@ -62,7 +69,7 @@ public class TeleportOnTick {
 
                     System.out.println("Player teleport");
                     var x = teleportedEntity.getX();
-                    var y = 250;
+                    var y = 250;  //TODO 250
                     var z = teleportedEntity.getZ();
                     if (targetDimension != SPACE_DIMENSION_KEY) {
                         Vec3 targetPos = spaceCoordToLandCoord(teleportedEntity.getPosition(0.0f), targetDimension);
@@ -80,13 +87,21 @@ public class TeleportOnTick {
                         // So I'll just disable it until the player lands, so it doesn't look like it's my mod causing the issue.
                         playerAccessor.setIsChangingDimension(false);
                     }
+
+                    originalLevel.getChunkSource().broadcast(teleportedEntity, new ClientboundTeleportEntityPacket(teleportedEntity));
                 }
             });
 
+
             if (vehicle != null) {
-                Entity newVehicle = teleportedEntities.get(vehicle.getId());
-                player.startRiding(newVehicle);
+                Entity  newVehicle = teleportedEntities.get(vehicle.getId());
+                newVehicle.hurt(newVehicle.damageSources().generic(), 0.0F);
+               newVehicle.gameEvent(GameEvent.TELEPORT);
+                player.gameEvent(GameEvent.TELEPORT);
+                player.startRiding(newVehicle, true);
+                player.hurt(player.damageSources().generic(), 0.0F);
             }
+
         }
     }
 
@@ -140,7 +155,8 @@ public class TeleportOnTick {
             });
 
             if (vehicle != null) {
-                Entity newVehicle = teleportedEntities.get(vehicle.getId());
+                vehicle.removeVehicle();
+               Entity newVehicle = teleportedEntities.get(vehicle.getId());
                 player.startRiding(newVehicle);
             }
         }
@@ -210,12 +226,15 @@ public class TeleportOnTick {
             success = VsCompatibility.teleportToValkyrienSkies((ServerLevel) entity.level(), level, entity, x, y, z, yRot, xRot);
         }
         if (!success) {
-            if (entity instanceof ServerPlayer) {
+            Vec3 relPos = new Vec3((double)0.5F, (double)0.0F, (double)0.0F);
+            Entity newEntity = entity.changeDimension(new DimensionTransition(level, new Vec3(x,y,z), relPos, 0, 0, DimensionTransition.DO_NOTHING));
+
+     /*       if (entity instanceof ServerPlayer) {
                 entity.teleportTo(level, x, y, z, Set.of(), entity.getYRot(), entity.getXRot());
                 return entity;
-            } else {
+            } else { */
                 //Copy of entity.teleportTo needed to get new entity object
-                float f = Mth.clamp(xRot, -90.0F, 90.0F);
+     /*           float f = Mth.clamp(xRot, -90.0F, 90.0F);
                 if (level == entity.level()) {
                     entity.moveTo(x, y, z, yRot, f);
                     teleportPassengers(entity);
@@ -235,8 +254,11 @@ public class TeleportOnTick {
                     level.addDuringTeleport(newEntity);
                     return newEntity;
                 }
-            }
-
+            } */
+              /*  entity.teleportTo(level, x, y, z, Set.of(), entity.getYRot(), entity.getXRot());
+                entity.gameEvent(GameEvent.TELEPORT);
+            } */
+            return newEntity;
         }
         return entity;
     }
