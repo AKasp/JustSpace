@@ -32,6 +32,12 @@ public class ItemRegister {
     public static final DeferredItem<BlockItem> PING_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("ping_device", BlockRegister.PING_DEVICE);
 
 
+    public static final DeferredItem<BlockItem> ALIEN_INSCRIPTION_ITEM = ITEMS.registerSimpleBlockItem("alien_inscription", BlockRegister.ALIEN_INSCRIPTION);
+
+
+    public static final DeferredItem<Item> ADVANCED_ELECTRONICS_ITEM = ITEMS.registerSimpleItem("advanced_electronics", new Item.Properties());
+
+
 
 
     // Creates a creative tab with the id "justspace:example_tab" for the example item, that is placed after the combat tab
@@ -47,7 +53,9 @@ public class ItemRegister {
                 output.accept(TAPE_DEVICE_BLOCK_ITEM.get());
                 output.accept(GAUGE_DEVICE_BLOCK_ITEM.get());
                 output.accept(PING_DEVICE_BLOCK_ITEM.get());
+                output.accept(ALIEN_INSCRIPTION_ITEM);
                 output.accept(SPACE_ZOMBIE_SPAWN_EGG);
+                output.accept(ADVANCED_ELECTRONICS_ITEM);
             }).build());
 
 

@@ -1,13 +1,26 @@
 {
-  "itemGroup.justspace": "Example Mod Tab",
-  "block.justspace.example_block": "Example Block",
-  "item.justspace.example_item": "Example Item",
+  "itemGroup.justspace": "Just Space",
 
   "justspace.configuration.title": "justspace Configs",
   "justspace.configuration.section.justspace.common.toml": "justspace Configs",
   "justspace.configuration.section.justspace.common.toml.title": "justspace Configs",
   "justspace.configuration.items": "Item List",
-  "justspace.configuration.logDirtBlock": "Log Dirt Block",
-  "justspace.configuration.magicNumberIntroduction": "Magic Number Text",
-  "justspace.configuration.magicNumber": "Magic Number"
+
+  "block.justspace.air_vent": "Creative Air Vent",
+  "block.justspace.air_vent_offline": "Creative Air Vent (Offline)",
+  "block.justspace.air_vent_sealed": "Creative Air Vent (Sealed)",
+  "block.justspace.air_vent_working": "Creative Air Vent (Working)",
+  "block.justspace.alien_inscription": "Alien Inscription",
+  "block.justspace.broken_air_vent": "Broken Air Vent",
+  "block.justspace.control_device": "Control Device",
+  "block.justspace.gauge_device": "Gauge Device",
+  "block.justspace.ping_device": "Thing that goes Ping",
+  "block.justspace.powered_air_vent": "Powered Air Vent",
+  "block.justspace.powered_air_vent_offline": "Powered Air Vent (Offline)",
+  "block.justspace.powered_air_vent_sealed": "Powered Air Vent (Sealed)",
+  "block.justspace.powered_air_vent_working": "Powered Air Vent (Working)",
+  "block.justspace.tape_device": "Tape Data Storage",
+
+  "item.justspace.advanced_electronics": "Advanced electronic thingy"
+
 }

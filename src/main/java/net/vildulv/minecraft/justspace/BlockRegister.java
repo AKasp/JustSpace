@@ -4,6 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -49,6 +50,13 @@ public class BlockRegister {
     public static final DeferredBlock<Block> PING_DEVICE = BLOCKS.registerBlock("ping_device", PingDeviceBlock::new, BlockBehaviour.Properties.of()
             .mapColor(MapColor.STONE)
             .destroyTime(1F)
+    );
+    public static final DeferredBlock<Block> ALIEN_INSCRIPTION = BLOCKS.registerSimpleBlock("alien_inscription",
+            BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .requiresCorrectToolForDrops()
+                    .strength(50.0F, 1200.0F)
     );
 
 
