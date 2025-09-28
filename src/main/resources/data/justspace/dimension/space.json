@@ -29,13 +29,21 @@
         "vein_toggle": "minecraft:zero",
         "vein_ridged": "minecraft:zero",
         "vein_gap": "minecraft:zero",
-        "temperature": "minecraft:zero",
+        "temperature": {
+          "type": "minecraft:shifted_noise",
+          "noise": "minecraft:temperature",
+          "xz_scale": 0.5,
+          "y_scale": 0,
+          "shift_x": "minecraft:shift_x",
+          "shift_y": 0,
+          "shift_z": "minecraft:shift_z"
+        },
         "vegetation": "minecraft:zero",
         "continents": {
           "type": "minecraft:noise",
           "noise": "minecraft:continentalness",
-          "xz_scale": 0.5,
-          "y_scale": 0.6
+          "xz_scale": 0.2,
+          "y_scale": 0
         },
         "erosion": "minecraft:zero",
         "depth": "minecraft:zero",
@@ -58,7 +66,10 @@
         {
           "biome": "justspace:asteroid_field_biome",
           "parameters": {
-            "temperature": 0,
+            "temperature": [
+              -0.3,
+              2
+            ],
             "humidity": 0,
             "continentalness": [
               -0.1,
@@ -73,11 +84,14 @@
         {
           "biome": "justspace:huge_asteroid_biome",
           "parameters": {
-            "temperature": 0,
+            "temperature": [
+              -1,
+              1
+            ],
             "humidity": 0,
             "continentalness": [
-              0.5,
-              1
+              0.7,
+              2
             ],
             "erosion": 0,
             "weirdness": 0,
@@ -88,7 +102,10 @@
         {
           "biome": "justspace:empty_space_biome",
           "parameters": {
-            "temperature": 0,
+            "temperature": [
+              -1,
+              1
+            ],
             "humidity": 0,
             "continentalness": [
               -0.9,
@@ -103,11 +120,32 @@
         {
           "biome": "justspace:nebula_biome",
           "parameters": {
-            "temperature": 0,
+            "temperature": [
+              -1,
+              1
+            ],
             "humidity": 0,
             "continentalness": [
               -1,
               -0.9
+            ],
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "justspace:ice_asteroid_field_biome",
+          "parameters": {
+            "temperature": [
+              -2,
+              -0.3
+            ],
+            "humidity": 0,
+            "continentalness": [
+              -0.1,
+              0.7
             ],
             "erosion": 0,
             "weirdness": 0,

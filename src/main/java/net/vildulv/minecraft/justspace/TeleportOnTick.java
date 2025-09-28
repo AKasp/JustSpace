@@ -53,7 +53,7 @@ public class TeleportOnTick {
         if (player.getY() < -20 && player.level().dimension() == SPACE_DIMENSION_KEY) {
             long tick = player.level().getGameTime();
             if (tick % 40 == 0) {
-                PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(), "WARNING! Impending decompression! Ascend immediately or suffer fatal damage!");
+                PlayerChatMessage chatMessage = PlayerChatMessage.unsigned(player.getUUID(), "WARNING! Increased cosmical radiation! Ascend immediately or suffer fatal damage!");
                 player.createCommandSourceStack().sendChatMessage(new OutgoingChatMessage.Player(chatMessage), false, ChatType.bind(ChatType.CHAT, player));
             }
         }

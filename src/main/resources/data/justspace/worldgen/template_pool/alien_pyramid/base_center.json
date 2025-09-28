@@ -10,6 +10,14 @@
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
       }
+    }, {
+      "weight": 1,
+      "element": {
+        "location": "justspace:alien_pyramid/center2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
     }
   ]
 }

@@ -1,0 +1,39 @@
+{
+  "temperature": -100,
+  "downfall": 0,
+  "has_precipitation": false,
+  "temperature_modifier": "frozen",
+  "creature_spawn_probability": 0,
+  "effects": {
+    "sky_color": 756698,
+    "fog_color": 0,
+    "water_color": 0,
+    "water_fog_color": 0,
+    "grass_color_modifier": "none",
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {},
+  "features": [
+    [
+      "justspace:asteroids/ice_asteroid"
+    ],
+    [],
+    [
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ]
+}
