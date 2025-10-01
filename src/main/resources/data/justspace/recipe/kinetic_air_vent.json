@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "justspace",
+  "category": "building",
+  "pattern": [
+    "IRI",
+    "CKC",
+    "IEI"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "K": {
+      "item": "minecraft:coal_block"
+    },
+    "R": {
+      "item": "create:encased_fan"
+    },
+    "E": {
+      "item": "justspace:advanced_electronics"
+    }
+  },
+  "result": {
+    "id": "justspace:kinetic_air_vent",
+    "count": 1
+  }
+}

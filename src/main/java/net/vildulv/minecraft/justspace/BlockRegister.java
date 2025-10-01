@@ -6,12 +6,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.vildulv.minecraft.justspace.block.*;
 import net.vildulv.minecraft.justspace.block.entity.CreativeOxygenGenerator;
+import net.vildulv.minecraft.justspace.block.entity.KineticOxygenGenerator;
 import net.vildulv.minecraft.justspace.block.entity.PoweredOxygenGenerator;
 
 import java.util.function.Supplier;
@@ -59,7 +61,6 @@ public class BlockRegister {
                     .strength(50.0F, 1200.0F)
     );
 
-
     //Block Entities
 
     public static final Supplier<BlockEntityType<CreativeOxygenGenerator>> CREATIVE_OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("creative_oxygen_generator",
@@ -68,6 +69,24 @@ public class BlockRegister {
     public static final Supplier<BlockEntityType<PoweredOxygenGenerator>> POWERED_OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("powered_oxygen_generator",
             () -> BlockEntityType.Builder.of(PoweredOxygenGenerator::new, POWERED_AIR_VENT.get()).build(null));
 
+
+
+    //TODO add if create is installed
+    public static  DeferredBlock<Block> KINETIC_AIR_VENT;
+
+    //TODO add if create is installed
+    public static  Supplier<BlockEntityType<KineticOxygenGenerator>>  KINETIC_OXYGEN_GENERATOR_BE;
+
+
+    static{
+        if (ModList.get().isLoaded("create")) {
+            KINETIC_AIR_VENT = BLOCKS.registerBlock("kinetic_air_vent", KineticAirVentBlock::new, BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.STONE)
+                    .destroyTime(1F));
+            KINETIC_OXYGEN_GENERATOR_BE = BLOCK_ENTITY_REGISTER.register("kinetic_oxygen_generator",
+                    () -> BlockEntityType.Builder.of(KineticOxygenGenerator::new, KINETIC_AIR_VENT.get()).build(null));
+        }
+    };
 
     //Capabilities
 

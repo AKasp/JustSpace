@@ -5,6 +5,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -37,7 +38,15 @@ public class ItemRegister {
 
     public static final DeferredItem<Item> ADVANCED_ELECTRONICS_ITEM = ITEMS.registerSimpleItem("advanced_electronics", new Item.Properties());
 
+    //TODO only if create is loaded
+    public static DeferredItem<BlockItem> KINETIC_AIR_VENT_BLOCK_ITEM;
 
+
+    static{
+        if (ModList.get().isLoaded("create")) {
+            KINETIC_AIR_VENT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("kinetic_air_vent", BlockRegister.KINETIC_AIR_VENT);
+        }
+    };
 
 
     // Creates a creative tab with the id "justspace:example_tab" for the example item, that is placed after the combat tab
@@ -53,9 +62,12 @@ public class ItemRegister {
                 output.accept(TAPE_DEVICE_BLOCK_ITEM.get());
                 output.accept(GAUGE_DEVICE_BLOCK_ITEM.get());
                 output.accept(PING_DEVICE_BLOCK_ITEM.get());
-                output.accept(ALIEN_INSCRIPTION_ITEM);
-                output.accept(SPACE_ZOMBIE_SPAWN_EGG);
-                output.accept(ADVANCED_ELECTRONICS_ITEM);
+                output.accept(ALIEN_INSCRIPTION_ITEM.get());
+                output.accept(SPACE_ZOMBIE_SPAWN_EGG.get());
+                output.accept(ADVANCED_ELECTRONICS_ITEM.get());
+                if (ModList.get().isLoaded("create")) {
+                    output.accept(KINETIC_AIR_VENT_BLOCK_ITEM.get());
+                }
             }).build());
 
 

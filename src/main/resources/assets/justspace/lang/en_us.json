@@ -19,6 +19,10 @@
   "block.justspace.powered_air_vent_offline": "Powered Air Vent (Offline)",
   "block.justspace.powered_air_vent_sealed": "Powered Air Vent (Sealed)",
   "block.justspace.powered_air_vent_working": "Powered Air Vent (Working)",
+  "block.justspace.kinetic_air_vent": "Kinetic Air Vent",
+  "block.justspace.kinetic_air_vent_offline": "Kinetic Air Vent (Offline)",
+  "block.justspace.kinetic_air_vent_sealed": "Kinetic Air Vent (Sealed)",
+  "block.justspace.kinetic_air_vent_working": "Kinetic Air Vent (Working)",
   "block.justspace.tape_device": "Tape Data Storage",
 
   "item.justspace.advanced_electronics": "Advanced electronic thingy"

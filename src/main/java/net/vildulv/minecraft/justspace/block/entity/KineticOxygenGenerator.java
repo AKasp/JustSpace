@@ -1,41 +1,30 @@
 package net.vildulv.minecraft.justspace.block.entity;
 
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.vildulv.minecraft.justspace.BlockRegister;
 import net.vildulv.minecraft.justspace.VentTracker;
 import net.vildulv.minecraft.justspace.block.CreativeAirVentBlock;
-import net.vildulv.minecraft.justspace.block.util.CustomEnergyStorage;
 
-import javax.annotation.Nullable;
-
-public class PoweredOxygenGenerator extends BlockEntity implements OxygenGenerator {
-    private static final int ENERGY_CAPACITY = 1000;
-    private static final int ENERGY_INPUT = 256;
-    private static final int ENERGY_CONSUMPTION = 100;
-
-
+public class KineticOxygenGenerator extends KineticBlockEntity implements OxygenGenerator {
 
     OxygenGeneratorData data = new OxygenGeneratorData();
 
     public static final DirectionProperty FACING;
 
-    private final CustomEnergyStorage energy = new CustomEnergyStorage(ENERGY_CAPACITY, ENERGY_INPUT, 0, 0);
 
-    public PoweredOxygenGenerator(net.minecraft.core.BlockPos pos, net.minecraft.world.level.block.state.BlockState blockState) {
-        super(BlockRegister.POWERED_OXYGEN_GENERATOR_BE.get(), pos, blockState);
+    public KineticOxygenGenerator(BlockPos pos, BlockState blockState) {
+        super(BlockRegister.KINETIC_OXYGEN_GENERATOR_BE.get(), pos, blockState);
         AbstractOxygenGenerator.resetForNextCalculation(data);
     }
-
 
     static {
         FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -48,6 +37,11 @@ public class PoweredOxygenGenerator extends BlockEntity implements OxygenGenerat
 
     protected BlockState mirror(BlockState state, Mirror mirror) {
         return state.rotate(mirror.getRotation((Direction)state.getValue(FACING)));
+    }
+
+
+    public static void tick(Level level, BlockPos pos, BlockState state, PoweredOxygenGenerator blockEntity) {
+        AbstractOxygenGenerator.tick(level, pos, state, blockEntity);
     }
 
     @Override
@@ -81,8 +75,7 @@ public class PoweredOxygenGenerator extends BlockEntity implements OxygenGenerat
         }
     }
     @Override
-    public void setRemoved() {
-        super.setRemoved();
+    public void remove() {
         if (!this.level.isClientSide && this.level instanceof ServerLevel serverLevel) {
             VentTracker.unregisterVent(serverLevel, this);
         }
@@ -90,34 +83,20 @@ public class PoweredOxygenGenerator extends BlockEntity implements OxygenGenerat
 
 
 
-    public @Nullable IEnergyStorage getEnergyStorageCapability(@Nullable Direction side) {
-        return energy;
-    }
-
-    public boolean isPowered() {
-        return !energy.isEmpty();
-    }
-
-    public static void tick(Level level, BlockPos pos, BlockState state, PoweredOxygenGenerator blockEntity) {
-        if (level instanceof ServerLevel serverLevel) {
-            if (blockEntity.isPowered()) {
-                blockEntity.energy.removeEnergy(ENERGY_CONSUMPTION);
-                AbstractOxygenGenerator.tick(level, pos, state, blockEntity);
-            } else {
-
-                // If not powered, set the vent to offline and return.
-                if (state.hasProperty(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY)) {
-
-                    if (state.getValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY) != CreativeAirVentBlock.AirVentStates.OFFLINE) {
-                        level.setBlock(pos, state.setValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, CreativeAirVentBlock.AirVentStates.OFFLINE), 2);
-                        VentTracker.unregisterVent(serverLevel, blockEntity);
-                        AbstractOxygenGenerator.resetForNextCalculation(blockEntity.data);
-                    }
+    @Override
+    public void tick() {
+        super.tick();
+        if (getSpeed() == 0) {
+            if (getBlockState().hasProperty(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY) && level instanceof ServerLevel serverLevel) {
+                if (getBlockState().getValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY) != CreativeAirVentBlock.AirVentStates.OFFLINE) {
+                    level.setBlock(getBlockPos(), getBlockState().setValue(CreativeAirVentBlock.AIR_VENT_STATES_ENUM_PROPERTY, CreativeAirVentBlock.AirVentStates.OFFLINE), 2);
+                    VentTracker.unregisterVent(serverLevel, this);
+                    AbstractOxygenGenerator.resetForNextCalculation(data);
                 }
             }
+            return;
         }
-
-
+        AbstractOxygenGenerator.tick(level, getBlockPos(), getBlockState(), this);
     }
 
 

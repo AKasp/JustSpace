@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north,air_vent_state=working": { "model": "justspace:block/kinetic_air_vent_working" },
+    "facing=north,air_vent_state=sealed": { "model": "justspace:block/kinetic_air_vent_sealed" },
+    "facing=north,air_vent_state=offline": { "model": "justspace:block/kinetic_air_vent_offline" },
+
+    "facing=east,air_vent_state=working": { "model": "justspace:block/kinetic_air_vent_working", "y": 90 },
+    "facing=east,air_vent_state=sealed": { "model": "justspace:block/kinetic_air_vent_sealed", "y": 90 },
+    "facing=east,air_vent_state=offline": { "model": "justspace:block/kinetic_air_vent_offline", "y": 90 },
+
+    "facing=south,air_vent_state=working": { "model": "justspace:block/kinetic_air_vent_working", "y": 180 },
+    "facing=south,air_vent_state=sealed": { "model": "justspace:block/kinetic_air_vent_sealed", "y": 180 },
+    "facing=south,air_vent_state=offline": { "model": "justspace:block/kinetic_air_vent_offline", "y": 180 },
+
+    "facing=west,air_vent_state=working": { "model": "justspace:block/kinetic_air_vent_working", "y": 270 },
+    "facing=west,air_vent_state=sealed": { "model": "justspace:block/kinetic_air_vent_sealed", "y": 270 },
+    "facing=west,air_vent_state=offline": { "model": "justspace:block/kinetic_air_vent_offline", "y": 270 }
+  }
+}
