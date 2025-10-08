@@ -79,6 +79,10 @@ public class justspace {
         CREATIVE_MODE_TABS.register(modEventBus);
         //Register the mob entity register
         MobRegister.ENTITY_TYPES.register(modEventBus);
+        //register menus
+        MenuRegister.MENUS.register(modEventBus);
+        //register sounds
+        SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (justspace) to respond directly to events.

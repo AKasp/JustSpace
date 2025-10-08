@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {
+      "type": "single",
+      "resource": "justspace:block/terminal_screen_flicker"
+    },
+    {
+      "type": "single",
+      "resource": "create:gui/sprites/terminal_screen_flicker"
+    }
+  ]
+}

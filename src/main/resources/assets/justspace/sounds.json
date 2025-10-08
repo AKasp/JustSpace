@@ -1,0 +1,8 @@
+{
+  "static_terminal": {
+    "subtitle": "sounds.justspace.static",
+    "sounds": [
+      "justspace:static"
+    ]
+  }
+}

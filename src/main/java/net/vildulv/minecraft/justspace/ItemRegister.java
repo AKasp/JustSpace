@@ -31,6 +31,9 @@ public class ItemRegister {
     public static final DeferredItem<BlockItem> TAPE_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tape_device", BlockRegister.TAPE_DEVICE);
     public static final DeferredItem<BlockItem> GAUGE_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("gauge_device", BlockRegister.GAUGE_DEVICE);
     public static final DeferredItem<BlockItem> PING_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("ping_device", BlockRegister.PING_DEVICE);
+    public static final DeferredItem<BlockItem> COMMANDERS_TERMINAL_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("commanders_terminal_device", BlockRegister.COMMANDERS_TERMINAL_DEVICE);
+    public static final DeferredItem<BlockItem> CAPTAINS_TERMINAL_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("captains_terminal_device", BlockRegister.CAPTAINS_TERMINAL_DEVICE);
+    public static final DeferredItem<BlockItem> SCIENCE_TERMINAL_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("science_terminal_device", BlockRegister.SCIENCE_TERMINAL_DEVICE);
 
 
     public static final DeferredItem<BlockItem> ALIEN_INSCRIPTION_ITEM = ITEMS.registerSimpleBlockItem("alien_inscription", BlockRegister.ALIEN_INSCRIPTION);
@@ -62,6 +65,9 @@ public class ItemRegister {
                 output.accept(TAPE_DEVICE_BLOCK_ITEM.get());
                 output.accept(GAUGE_DEVICE_BLOCK_ITEM.get());
                 output.accept(PING_DEVICE_BLOCK_ITEM.get());
+                output.accept(COMMANDERS_TERMINAL_DEVICE_BLOCK_ITEM.get());
+                output.accept(CAPTAINS_TERMINAL_DEVICE_BLOCK_ITEM.get());
+                output.accept(SCIENCE_TERMINAL_DEVICE_BLOCK_ITEM.get());
                 output.accept(ALIEN_INSCRIPTION_ITEM.get());
                 output.accept(SPACE_ZOMBIE_SPAWN_EGG.get());
                 output.accept(ADVANCED_ELECTRONICS_ITEM.get());

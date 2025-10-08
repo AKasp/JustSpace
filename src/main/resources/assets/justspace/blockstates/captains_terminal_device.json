@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "justspace:block/terminal_device"
+    },
+    "facing=south": {
+      "model": "justspace:block/terminal_device",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "justspace:block/terminal_device",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "justspace:block/terminal_device",
+      "y": 270
+    }
+  }
+}
