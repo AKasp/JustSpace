@@ -1,7 +1,7 @@
 {
   "structures": [
     {
-      "structure": "justspace:space_station",
+      "structure": "justspace:corrupted_space_station",
       "weight": 1
     }
   ],
@@ -10,6 +10,6 @@
     "spacing": 64,
     "separation": 8,
     "spread_type": "triangular",
-    "salt": 983910982347
+    "salt": 983910982348
   }
 }

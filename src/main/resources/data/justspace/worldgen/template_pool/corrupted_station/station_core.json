@@ -1,11 +1,11 @@
 {
-  "name": "justspace:ship/ship",
+  "name": "justspace:corrupted_station/station_core",
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 5,
       "element": {
-        "location": "justspace:ship/space_ship_body_1",
+        "location": "justspace:corrupted_station/space_station_command_block",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,7 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_body_2",
+        "location": "justspace:corrupted_station/reactor",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,16 +23,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_body_3",
-        "processors": "minecraft:empty",
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
-    },
-    {
-      "weight": 1,
-      "element": {
-        "location": "justspace:ship/space_ship_body_4",
+        "location": "justspace:corrupted_station/garden",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

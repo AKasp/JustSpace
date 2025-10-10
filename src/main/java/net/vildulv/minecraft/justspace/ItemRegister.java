@@ -37,6 +37,7 @@ public class ItemRegister {
 
 
     public static final DeferredItem<BlockItem> ALIEN_INSCRIPTION_ITEM = ITEMS.registerSimpleBlockItem("alien_inscription", BlockRegister.ALIEN_INSCRIPTION);
+    public static final DeferredItem<BlockItem> CRYSTAL_VINE_ITEM = ITEMS.registerSimpleBlockItem("crystal_vine", BlockRegister.CRYSTAL_VINE);
 
 
     public static final DeferredItem<Item> ADVANCED_ELECTRONICS_ITEM = ITEMS.registerSimpleItem("advanced_electronics", new Item.Properties());
@@ -69,6 +70,7 @@ public class ItemRegister {
                 output.accept(CAPTAINS_TERMINAL_DEVICE_BLOCK_ITEM.get());
                 output.accept(SCIENCE_TERMINAL_DEVICE_BLOCK_ITEM.get());
                 output.accept(ALIEN_INSCRIPTION_ITEM.get());
+                output.accept(CRYSTAL_VINE_ITEM.get());
                 output.accept(SPACE_ZOMBIE_SPAWN_EGG.get());
                 output.accept(ADVANCED_ELECTRONICS_ITEM.get());
                 if (ModList.get().isLoaded("create")) {

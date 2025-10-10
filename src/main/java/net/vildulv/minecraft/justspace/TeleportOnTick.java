@@ -26,6 +26,7 @@ public class TeleportOnTick {
 
     private static final int LAND_TO_SPACE_CONVERSION_FACTOR = 256;
     private static final int LANDING_ZONE = 256;
+    private static final int TELEPORT_HEIGHT = Config.TELEPORT_HEIGHT.getAsInt();
 
 
     public static void onEntityTick(PlayerTickEvent.Post event) {
@@ -43,7 +44,7 @@ public class TeleportOnTick {
         if (entity.getY() < triggerAtY && entity.yo < triggerAtY) {
             handleTeleportToPlanet(entity);
         }
-        if (entity.getY() > 300 && entity.yo > 300) {
+        if (entity.getY() > TELEPORT_HEIGHT && entity.yo > TELEPORT_HEIGHT) {
             handleTeleportToSpace(entity);
         }
 
@@ -89,7 +90,7 @@ public class TeleportOnTick {
 
                     System.out.println("Player teleport");
                     var x = teleportedEntity.getX();
-                    var y = 250;  //TODO 250
+                    var y = TELEPORT_HEIGHT-50;
                     var z = teleportedEntity.getZ();
                     if (targetDimension != SPACE_DIMENSION_KEY) {
                         Vec3 targetPos = spaceCoordToLandCoord(teleportedEntity.getPosition(0.0f), targetDimension);
@@ -201,7 +202,7 @@ public class TeleportOnTick {
     private static Vec3 spaceCoordToLandCoord(Vec3 spaceCoord, ResourceKey<Level> dimension) {
         Config.PlanetRecord planetRecord = getPlanetRecord(dimension);
         double x = (spaceCoord.x - planetRecord.x()) * LAND_TO_SPACE_CONVERSION_FACTOR;
-        double y = 250;
+        double y = TELEPORT_HEIGHT-50;
         double z = (spaceCoord.z - planetRecord.z()) * LAND_TO_SPACE_CONVERSION_FACTOR;
         return new Vec3(x, y, z);
     }

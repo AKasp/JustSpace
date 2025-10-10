@@ -2,10 +2,12 @@ package net.vildulv.minecraft.justspace;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
@@ -70,6 +72,16 @@ public class BlockRegister {
                     .requiresCorrectToolForDrops()
                     .strength(50.0F, 1200.0F)
     );
+    public static final DeferredBlock<Block> CRYSTAL_VINE = BLOCKS.registerBlock("crystal_vine", CrystalVine::new,  BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PURPLE)
+                            .replaceable()
+                            .noCollission()
+                            .randomTicks()
+                            .strength(0.2F)
+                            .sound(SoundType.AMETHYST)
+                            .pushReaction(PushReaction.DESTROY)
+            );
+
 
     //Block Entities
 
