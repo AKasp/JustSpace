@@ -3,7 +3,9 @@
   "start_pool": "justspace:corrupted_station/station_core",
   "size": 4,
   "max_distance_from_center": 64,
-  "biomes": ["justspace:empty_space_biome"],
+  "biomes": [
+    "justspace:empty_space_biome"
+  ],
   "step": "surface_structures",
   "start_height": {
     "type": "minecraft:uniform",
@@ -14,6 +16,18 @@
       "absolute": 200
     }
   },
-  "spawn_overrides": {},
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "justspace:space_zombie",
+          "maxCount": 3,
+          "minCount": 2,
+          "weight": 1
+        }
+      ]
+    }
+  },
   "use_expansion_hack": false
 }

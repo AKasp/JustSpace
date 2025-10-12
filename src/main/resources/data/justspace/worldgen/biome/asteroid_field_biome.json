@@ -17,7 +17,15 @@
       "tick_delay": 6000
     }
   },
-  "spawners": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [ ],
+    "underground_water_creature": [],
+    "water_creature": []
+  },
   "spawn_costs": {},
   "carvers": {},
   "features": [

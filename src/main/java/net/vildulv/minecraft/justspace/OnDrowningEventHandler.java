@@ -13,7 +13,7 @@ public class OnDrowningEventHandler {
     public void onLivingDrownEvent(LivingDrownEvent event) {
         LivingEntity entity = event.getEntity();
         if (entity.level().dimension() == justspace.SPACE_DIMENSION_KEY &&
-        entity.isAlive() && !entity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(entity)) {
+        entity.isAlive() && !entity.canBreatheUnderwater() && !MobEffectUtil.hasWaterBreathing(entity) && !entity.getType().is(justspace.SPACE_MOBS)) {
             Vec3 pos = entity.getEyePosition();
             if (VentTracker.isInBreathableArea(entity.level(), new Vec3i((int)pos.x, (int)pos.y, (int)pos.z))) {
                 // If the entity is in a breathable area, allow breathing

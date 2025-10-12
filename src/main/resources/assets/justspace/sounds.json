@@ -4,5 +4,11 @@
     "sounds": [
       "justspace:static"
     ]
-  }
+  },
+  "void_manta_idle": {
+  "subtitle": "sounds.justspace.void_manta_idle",
+  "sounds": [
+    "justspace:void_manta_idle"
+  ]
+}
 }

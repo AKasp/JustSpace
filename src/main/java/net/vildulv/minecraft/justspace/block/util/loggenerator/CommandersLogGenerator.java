@@ -10,7 +10,7 @@ import static net.vildulv.minecraft.justspace.block.util.loggenerator.Commanders
 public class CommandersLogGenerator {
 
 
-    static final RandomSource RANDOM = RandomSource.create(193944213L);;
+    static final RandomSource RANDOM = RandomSource.create(193944213L);
 
 
     public static String generateSpaceShipLog() {

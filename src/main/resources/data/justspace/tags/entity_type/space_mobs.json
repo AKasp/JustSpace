@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "justspace:space_zombie",
+    "#minecraft:undead",
+    "#minecraft:zombies",
+    "minecraft:enderman",
+    "justspace:void_manta"
+  ]
+}

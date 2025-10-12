@@ -22,10 +22,6 @@ public class ItemRegister {
     // Creates a new BlockItem with the id "justspace:example_block", combining the namespace and path
     public static final DeferredItem<BlockItem> CREATIVE_AIR_VENT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("creative_air_vent", BlockRegister.CREATIVE_AIR_VENT);
     public static final DeferredItem<BlockItem> POWERED_AIR_VENT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("powered_air_vent", BlockRegister.POWERED_AIR_VENT);
-    public static final DeferredItem<Item> SPACE_ZOMBIE_SPAWN_EGG = ITEMS.register("space_zombie_spawn_egg",
-            () -> new DeferredSpawnEggItem(MobRegister.SPACE_ZOMBIE, 0x20020, 0x901080,
-                    new Item.Properties()));
-
     public static final DeferredItem<BlockItem> BROKEN_AIR_VENT_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("broken_air_vent", BlockRegister.BROKEN_AIR_VENT);
     public static final DeferredItem<BlockItem> CONTROL_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("control_device", BlockRegister.CONTROL_DEVICE);
     public static final DeferredItem<BlockItem> TAPE_DEVICE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("tape_device", BlockRegister.TAPE_DEVICE);
@@ -41,6 +37,14 @@ public class ItemRegister {
 
 
     public static final DeferredItem<Item> ADVANCED_ELECTRONICS_ITEM = ITEMS.registerSimpleItem("advanced_electronics", new Item.Properties());
+
+    public static final DeferredItem<Item> SPACE_ZOMBIE_SPAWN_EGG = ITEMS.register("space_zombie_spawn_egg",
+            () -> new DeferredSpawnEggItem(MobRegister.SPACE_ZOMBIE, 0x20020, 0x901080,
+                    new Item.Properties()));
+
+    public static final DeferredItem<Item> VOID_MANTA_SPAWN_EGG = ITEMS.register("void_manta_spawn_egg",
+            () -> new DeferredSpawnEggItem(MobRegister.VOID_MANTA, 0x002020, 0x2020A0,
+                    new Item.Properties()));
 
     //TODO only if create is loaded
     public static DeferredItem<BlockItem> KINETIC_AIR_VENT_BLOCK_ITEM;
@@ -72,6 +76,7 @@ public class ItemRegister {
                 output.accept(ALIEN_INSCRIPTION_ITEM.get());
                 output.accept(CRYSTAL_VINE_ITEM.get());
                 output.accept(SPACE_ZOMBIE_SPAWN_EGG.get());
+                output.accept(VOID_MANTA_SPAWN_EGG.get());
                 output.accept(ADVANCED_ELECTRONICS_ITEM.get());
                 if (ModList.get().isLoaded("create")) {
                     output.accept(KINETIC_AIR_VENT_BLOCK_ITEM.get());

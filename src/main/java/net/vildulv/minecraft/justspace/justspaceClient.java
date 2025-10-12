@@ -8,12 +8,13 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.vildulv.minecraft.justspace.client.render.effects.SpaceDimensionEffect;
 import net.vildulv.minecraft.justspace.client.render.entity.SpaceZombieRenderer;
+import net.vildulv.minecraft.justspace.client.render.entity.VoidMantaRenderer;
+
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = justspace.MODID, dist = Dist.CLIENT)
@@ -35,6 +36,7 @@ public class justspaceClient {
 
 
         EntityRenderers.register(MobRegister.SPACE_ZOMBIE.get(), SpaceZombieRenderer::new);
+        EntityRenderers.register(MobRegister.VOID_MANTA.get(), VoidMantaRenderer::new);
     }
 
     @SubscribeEvent
