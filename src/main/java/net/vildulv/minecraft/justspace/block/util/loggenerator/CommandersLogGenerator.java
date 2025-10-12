@@ -261,7 +261,7 @@ public class CommandersLogGenerator {
 
         EVENTS("{EE}",
                 List.of("Routine maintenance completed; {SS}",
-                        "Received supply shipment from distant colony, invertory fully restocked. However {CS}",
+                        "Received supply shipment from distant colony, inventory fully restocked. However {CS}",
                         "Minor hull breach in docking bay causing {SD}. Engineering team performed rapid repairs",
                         "Communications blackout lasted {##]} hours, cause traced to solar flare interference. Investigation gave clue to {IR}",
                         "Unidentified vessel approached station perimeter, security protocols activated. {CS}",

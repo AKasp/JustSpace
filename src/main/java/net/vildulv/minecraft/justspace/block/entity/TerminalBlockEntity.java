@@ -22,7 +22,11 @@ public abstract class TerminalBlockEntity  extends BlockEntity implements MenuPr
 
     public TerminalBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
+        this.terminalText = getText();
+        setChanged();
     }
+
+    abstract protected String getText();
 
     public static final DirectionProperty FACING;
     private String terminalText = "";
@@ -31,12 +35,11 @@ public abstract class TerminalBlockEntity  extends BlockEntity implements MenuPr
         FACING = BlockStateProperties.HORIZONTAL_FACING;
     }
 
-    public void setTerminalText(String terminalText) {
-        this.terminalText = terminalText;
-        setChanged();
-    }
-
     public String getTerminalText() {
+        if (this.terminalText == null || this.terminalText.isEmpty()) {
+            this.terminalText = getText();
+            setChanged();
+        }
         return terminalText;
     }
 

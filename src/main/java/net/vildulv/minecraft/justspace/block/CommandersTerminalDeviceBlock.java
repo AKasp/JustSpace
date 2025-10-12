@@ -64,7 +64,6 @@ public class CommandersTerminalDeviceBlock extends BaseEntityBlock implements En
     @Nullable
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         CommandersTerminalBlockEntity terminalBlockEntity = new CommandersTerminalBlockEntity(blockPos, blockState);
-        terminalBlockEntity.setTerminalText(CommandersLogGenerator.generateSpaceStationLog());
         return terminalBlockEntity;
     }
 

@@ -63,7 +63,6 @@ public class CaptainsTerminalDeviceBlock extends BaseEntityBlock implements Enti
     @Nullable
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         CaptainsTerminalBlockEntity terminalBlockEntity = new CaptainsTerminalBlockEntity(blockPos, blockState);
-        terminalBlockEntity.setTerminalText(CommandersLogGenerator.generateSpaceShipLog());
         return terminalBlockEntity;
     }
 

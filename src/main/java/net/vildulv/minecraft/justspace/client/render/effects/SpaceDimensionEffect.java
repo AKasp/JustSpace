@@ -51,6 +51,12 @@ public class SpaceDimensionEffect extends DimensionSpecialEffects {
         return true; // No clouds in space
     }
 
+
+    @Nullable
+    public float[] getSunriseColor(float timeOfDay, float partialTicks) {
+        return null; // No sunrise in space
+    }
+
     private void createLightSky() {
         if (this.skyBuffer != null) {
             this.skyBuffer.close();

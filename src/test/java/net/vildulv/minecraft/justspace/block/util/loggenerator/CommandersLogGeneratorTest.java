@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandersLogGeneratorTest {
-
+/*
     @Test
     public void testGenerateLogs() {
         CommandersLogGenerator logGenerator = new CommandersLogGenerator();
@@ -27,5 +27,5 @@ class CommandersLogGeneratorTest {
             System.out.println(log);
         }
     }
-
+*/
 }

@@ -63,7 +63,6 @@ public class ScienceTerminalDeviceBlock extends BaseEntityBlock implements Entit
     @Nullable
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         ScienceTerminalBlockEntity terminalBlockEntity = new ScienceTerminalBlockEntity(blockPos, blockState);
-        terminalBlockEntity.setTerminalText(CommandersLogGenerator.generateScienceLogs());
         return terminalBlockEntity;
     }
 
