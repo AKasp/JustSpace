@@ -7,7 +7,8 @@
     "ServerGamePacketListenerImplAccessor",
     "ServerPlayerAccessor",
     "GravityOverrides",
-    "InWaterOverride"
+    "InWaterOverride",
+    "SpaceFireworkOverrides"
   ],
   "client": [
   ],
