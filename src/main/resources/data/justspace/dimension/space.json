@@ -67,8 +67,8 @@
           "biome": "justspace:asteroid_field_biome",
           "parameters": {
             "temperature": [
-              -0.3,
-              2
+              -0.5,
+              0.7
             ],
             "humidity": 0,
             "continentalness": [
@@ -140,7 +140,25 @@
           "parameters": {
             "temperature": [
               -2,
-              -0.3
+              -0.5
+            ],
+            "humidity": 0,
+            "continentalness": [
+              -0.1,
+              0.7
+            ],
+            "erosion": 0,
+            "weirdness": 0,
+            "depth": 0,
+            "offset": 0
+          }
+        },
+        {
+          "biome": "justspace:nether_asteroid_field_biome",
+          "parameters": {
+            "temperature": [
+              0.7,
+              2
             ],
             "humidity": 0,
             "continentalness": [

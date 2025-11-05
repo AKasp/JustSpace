@@ -1,9 +1,12 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "justspace:ship/ship_body",
-  "size": 4,
-  "max_distance_from_center": 30,
-  "biomes": ["justspace:empty_space_biome", "justspace:asteroid_field_biome", "justspace:nebula_biome", "justspace:nether_asteroid_field_biome", "justspace:ice_asteroid_field_biome"],
+  "start_pool": "justspace:mine/mine_asteroid",
+  "size": 6,
+  "max_distance_from_center": 116,
+  "biomes": [
+    "justspace:asteroid_field_biome",
+    "justspace:nether_asteroid_field_biome"
+  ],
   "step": "surface_structures",
   "start_height": {
     "type": "minecraft:uniform",

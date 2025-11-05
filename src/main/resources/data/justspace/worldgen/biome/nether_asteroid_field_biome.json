@@ -5,9 +5,9 @@
   "temperature_modifier": "frozen",
   "creature_spawn_probability": 0,
   "effects": {
-    "sky_color": 756698,
+    "sky_color": 6051077,
     "fog_color": 0,
-    "water_color": 4159204,
+    "water_color": 0,
     "water_fog_color": 0,
     "grass_color_modifier": "none",
     "mood_sound": {
@@ -22,7 +22,7 @@
   "carvers": {},
   "features": [
     [
-      "justspace:asteroids/ice_asteroid"
+      "justspace:asteroids/nether_asteroid"
     ],
     [],
     [

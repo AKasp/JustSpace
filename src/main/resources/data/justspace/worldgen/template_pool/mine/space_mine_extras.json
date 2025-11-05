@@ -1,11 +1,11 @@
 {
-  "name": "justspace:ship/ship",
+  "name": "justspace:mine/space_mine_extras",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_antenna_1",
+        "location": "justspace:mine/extra_1",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -14,7 +14,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_antenna_2",
+        "location": "justspace:mine/extra_2",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -23,7 +23,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_antenna_3",
+        "location": "justspace:mine/extra_3",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
@@ -32,7 +32,16 @@
     {
       "weight": 1,
       "element": {
-        "location": "justspace:ship/space_ship_antenna_4",
+        "location": "justspace:mine/extra_4",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "justspace:mine/extra_5",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
